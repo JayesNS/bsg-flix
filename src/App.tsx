@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { withAuthProvider } from './context';
 
-import './App.css';
 import { Main, Player, Splash } from './views';
 
 const App = () => {
@@ -9,8 +9,8 @@ const App = () => {
     <React.StrictMode>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Main />} />
-          <Route path="splash" element={<Splash />} />
+          <Route index element={<Splash />} />
+          <Route path="home" element={<Main />} />
           <Route path="player" element={<Player />} />
         </Routes>
       </BrowserRouter>
@@ -18,4 +18,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withAuthProvider(App);
