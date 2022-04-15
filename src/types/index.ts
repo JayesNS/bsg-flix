@@ -42,11 +42,15 @@ export interface Image {
   Height: number;
 }
 
+export type MediaTypeCode = 'LIVE' | 'VOD';
+
+export type MediaTypeDisplayName = 'Na żywo' | 'VOD';
+
 export interface Media {
   Id: number;
   Guid: string;
-  MediaTypeCode: 'LIVE' | 'VOD';
-  MediaTypeDisplayName: 'Na żywo' | 'VOD';
+  MediaTypeCode: MediaTypeCode;
+  MediaTypeDisplayName: MediaTypeDisplayName;
   MediaAgeRestrictionValueMin: number;
   MediaAgeRestrictionImageUrl: string;
   Title: string;
@@ -66,4 +70,15 @@ export interface MediaListResponse {
   PageSize: number;
   PageNumber: number
   TotalCount: number;
+}
+
+export interface MediaPlayInfo {
+  MediaId: number;
+  Title: string;
+  Description: string;
+  MediaTypeCode: MediaTypeCode;
+  MediaTypeDisplayName: MediaTypeDisplayName;
+  StreamId: number;
+  Provider: 'Internal';
+  ContentUrl: string;
 }

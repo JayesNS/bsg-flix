@@ -20,7 +20,7 @@ const MediaList = ({mediaList}: MediaListProps) => {
     const imageUrl = frameImage?.Url ?? '';
 
     return (
-      <MediaCard key={id} title={title} imageUrl={imageUrl} />
+      <MediaCard key={id} title={title} mediaId={id} imageUrl={imageUrl} />
     );
   }, []);
 

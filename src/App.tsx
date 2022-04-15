@@ -11,7 +11,7 @@ const App = () => {
         <Routes>
           <Route index element={<Splash />} />
           <Route path="home" element={<Main />} />
-          <Route path="player" element={<Player />} />
+          <Route path="player/:mediaId" element={<Player />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>

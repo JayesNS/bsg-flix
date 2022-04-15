@@ -1,4 +1,4 @@
-import {MediaListResponse, ResponseError} from '../types';
+import {MediaListResponse, MediaPlayInfo, ResponseError} from '../types';
 
 export const fetchMediaList = async (listId: number, {token}: {token: string}): Promise<MediaListResponse> => {
   const response = await fetch('https://thebetter.bsgroup.eu/Media/GetMediaList', {
@@ -14,6 +14,25 @@ export const fetchMediaList = async (listId: number, {token}: {token: string}): 
       IncludeMedia: false,
       PageNumber: 1,
       PageSize: 15
+    })
+  });
+  const data = await response.json();
+  if ((data as ResponseError).ErrorDetail) {
+    return Promise.reject(data);
+  }
+  return Promise.resolve(data);
+};
+
+export const fetchMediaPlayInfo = async (mediaId: number, {token}: {token: string}): Promise<MediaPlayInfo> => {
+  const response = await fetch('https://thebetter.bsgroup.eu/Media/GetMediaPlayInfo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      MediaId: mediaId,
+      StreamType: 'TRIAL'
     })
   });
   const data = await response.json();
