@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { ComponentType, useContext, useMemo } from 'react';
+import React, { ComponentType, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {v4 as uuid} from 'uuid';
 
 import { AuthService } from '../services';
@@ -15,7 +15,8 @@ const AuthContext = React.createContext<AuthContextApi>({
 
 function withAuthProvider<T>(Component: ComponentType<T>) {
   return function AuthProvider(props: T) {
-
+    const [token, setToken] = useState<string>();
+    
     const cookies = useMemo<Record<string, string>>(() => {
       const decoded = decodeURIComponent(document.cookie);
       const cookies = decoded.split('; ');
@@ -27,20 +28,24 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
         };
       }, {});
     }, [document.cookie]);
-    
-    
-    const authContextApi = useMemo<AuthContextApi>(() => ({
-      token: cookies['token'],
-      signInAnonymous
-    }), [cookies]);
-    
-    function signInAnonymous() {
+
+    const signInAnonymous = useCallback(() => {
       AuthService.signInAnonymous(uuid())
         .then((response) => {
           const {Token, TokenExpires} = response.AuthorizationToken;
           setCookie('token', Token, TokenExpires);
+          setToken(Token);
         }).catch(console.error);
-    }
+    }, [setToken]);
+
+    useEffect(() => {
+      const cookie = cookies['token'];
+      if (cookie) {
+        setToken(cookies['token']);
+        return;
+      }
+      signInAnonymous();
+    }, [cookies, signInAnonymous]);
 
     function setCookie(name: string, value: string, tokenExpires: string): void {
       const expires = 'expires=' + new Date(tokenExpires).toUTCString();
@@ -48,7 +53,10 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
     }
 
     return (
-      <AuthContext.Provider value={authContextApi}>
+      <AuthContext.Provider value={{
+        token,
+        signInAnonymous
+      }}>
         <Component {...props} />
       </AuthContext.Provider>
     );
