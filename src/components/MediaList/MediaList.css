@@ -1,0 +1,7 @@
+.MediaList {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: stretch;
+  justify-content: space-around;
+}
