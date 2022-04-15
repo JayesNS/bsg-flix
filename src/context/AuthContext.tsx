@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { ComponentType, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, {ComponentType, useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import {v4 as uuid} from 'uuid';
 
-import { AuthService } from '../services';
+import {AuthService} from '../services';
 
 interface AuthContextApi {
   token?: string;
@@ -49,7 +49,7 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
 
     function setCookie(name: string, value: string, tokenExpires: string): void {
       const expires = 'expires=' + new Date(tokenExpires).toUTCString();
-      document.cookie = `${name}=${value}"; "${expires}"; path=/`;
+      document.cookie = `${name}=${value}; ${expires}; path=/`;
     }
 
     return (

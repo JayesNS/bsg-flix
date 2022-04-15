@@ -1,4 +1,4 @@
-import { ResponseError, SignInResponse } from '../types';
+import {ResponseError, SignInResponse} from '../types';
 
 export const signInAnonymous = async (deviceUuid: string): Promise<SignInResponse> => {
   const response = await fetch('https://thebetter.bsgroup.eu/Authorization/SignIn', {

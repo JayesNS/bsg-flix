@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { withAuthProvider } from './context';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {withAuthProvider} from './context';
 
-import { Main, Player, Splash } from './views';
+import {Main, Player, Splash} from './views';
 
 const App = () => {
   return (

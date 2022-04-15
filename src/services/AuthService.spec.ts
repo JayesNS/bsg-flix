@@ -1,4 +1,4 @@
-import { AuthService } from '.';
+import {AuthService} from '.';
 
 const fetchMock = jest.fn();
 describe('AuthService', () => {
