@@ -6,7 +6,7 @@ import './MediaCard.css';
 interface MediaCardProps {
   mediaId: number;
   title: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 const MediaCard = ({mediaId, title, imageUrl}: MediaCardProps) => {
@@ -19,7 +19,7 @@ const MediaCard = ({mediaId, title, imageUrl}: MediaCardProps) => {
   return (
     <div className="MediaCard" onClick={openPlayer}>
       <h6>{title}</h6>
-      <img src={imageUrl} alt={title} />
+      <img src={imageUrl} alt={title} data-testid="media-card-image" />
     </div>
   );
 };

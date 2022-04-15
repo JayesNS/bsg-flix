@@ -9,7 +9,7 @@ describe('AuthService', () => {
   it('should handle signing in anonymous user with invalid device UUID', async () => {
     const deviceUuid = '';
     const expectedResponse = {};
-    fetchMock.mockImplementation(() => Promise.resolve({json: Promise.resolve({})}));
+    fetchMock.mockImplementation(() => Promise.resolve({json: () => Promise.resolve({})}));
 
     expect(await AuthService.signInAnonymous(deviceUuid)).toStrictEqual(expectedResponse);
   });

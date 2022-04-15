@@ -3,6 +3,10 @@ import {render, cleanup} from '@testing-library/react';
 
 import Main from './Main';
 
+jest.mock('../../components', () => ({
+  MediaListWidget: () => <></>
+}));
+
 describe('Main', () => {
   afterAll(cleanup);
 
