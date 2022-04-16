@@ -1,18 +1,16 @@
 import React from 'react';
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
-import {useNavigate} from 'react-router-dom';
 
 import MediaCard from './MediaCard';
 
 const mockedNavigate = jest.fn();
-
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockedNavigate
 }));
 
 describe('MediaCard', () => {
-  beforeAll(() => {
+  afterEach(() => {
     cleanup();
   });
 
