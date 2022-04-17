@@ -19,7 +19,7 @@ export interface SignInResponse {
 export type ResponseErrorType = 'MODEL_VALIDATION_ERROR';
 
 export interface ResponseError {
-  MessageKey: ResponseError;
+  MessageKey: ResponseErrorType;
   Message: string;
   ErrorDetail: {
     Message: string;

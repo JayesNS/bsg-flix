@@ -1,4 +1,5 @@
 import {AuthService} from '.';
+import { ResponseError } from '../types';
 
 const fetchMock = jest.fn();
 describe('AuthService', () => {
@@ -6,11 +7,14 @@ describe('AuthService', () => {
     global.fetch = fetchMock as jest.Mock;
   });
 
-  it('should handle signing in anonymous user with invalid device UUID', async () => {
-    const deviceUuid = '';
-    const expectedResponse = {};
-    fetchMock.mockImplementation(() => Promise.resolve({json: () => Promise.resolve({})}));
+  describe('signInAnonymous', () => {
 
-    expect(await AuthService.signInAnonymous(deviceUuid)).toStrictEqual(expectedResponse);
+    it('should handle signing in anonymous user', async () => {
+      const deviceUuid = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx';
+      const mockResponse = {};
+      fetchMock.mockImplementation(() => Promise.resolve({json: () => Promise.resolve(mockResponse)}));
+  
+      expect(await AuthService.signInAnonymous(deviceUuid)).toStrictEqual({});
+    });
   });
 });

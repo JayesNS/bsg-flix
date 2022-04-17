@@ -31,7 +31,7 @@ describe('PrivateRoute', () => {
   it('should navigate when token is not present', async () => {
     render(<PrivateRoute component={MockRoute} />);
 
-    const navigateComponent = await screen.queryByText('navigate');
+    const navigateComponent = screen.queryByText('navigate');
 
     expect(navigateComponent).not.toBeNull();
   });
@@ -41,7 +41,7 @@ describe('PrivateRoute', () => {
 
     render(<PrivateRoute component={MockRoute} />);
 
-    const mockRoute = await screen.queryByText('mock');
+    const mockRoute = screen.queryByText('mock');
 
     expect(mockRoute).not.toBeNull();
   });
