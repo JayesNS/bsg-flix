@@ -43,6 +43,7 @@ const SignInBox = ({onSignIn}: SignInBoxProps) => {
             type="text"
             label="E-mail"
             error={errors?.email?.message}
+            testID="email-input"
             {...field}
           />
         )}
@@ -56,6 +57,7 @@ const SignInBox = ({onSignIn}: SignInBoxProps) => {
             type="password"
             label="Password"
             error={errors?.password?.message}
+            testID="password-input"
             {...field}
           />
         )}
@@ -65,6 +67,7 @@ const SignInBox = ({onSignIn}: SignInBoxProps) => {
           className="flat"
           type="submit"
           onClick={handleSubmit(handleSignIn)}
+          data-testid="sign-in-submit"
         >
           Login
         </button>
