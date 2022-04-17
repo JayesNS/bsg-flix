@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import ReactPlayer from 'react-player';
 
 import './Player.css';
@@ -19,15 +19,29 @@ const Player = () => {
       });
   }, []);
 
+  const renderNoPlayback = () => (
+    <div>
+      No playback
+      <Link to="/home">
+        <button className="flat">Back to home page</button>
+      </Link>
+    </div>
+  );
+
   return (
     <div className="Player">
-      <ReactPlayer
-        url={contentUrl}
-        playing
-        controls
-        width="80%"
-        height="100%"
-      />
+      {contentUrl
+        ? (
+          <ReactPlayer
+            url={contentUrl}
+            playing
+            controls
+            width="100%"
+            height="100%"
+          />
+        )
+        : renderNoPlayback()
+      }
     </div>
   );
 };
