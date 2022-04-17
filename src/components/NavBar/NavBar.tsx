@@ -1,0 +1,40 @@
+import React from 'react';
+import {Link} from 'react-router-dom';
+
+import {useAuth} from '../../context';
+
+import './NavBar.css';
+
+const NavBar = () => {
+  const {user} = useAuth();
+
+  const renderSignOutButtons = () => (
+    <>
+      {user?.fullName ? <span className="header__right__user">{user?.fullName}</span> : null}
+      <button className="text" data-testid="sign-out-button">
+        Sign Out
+      </button>
+    </>
+  );
+
+  const renderSignInButtons = () => (
+    <Link to="/signIn">
+      <button className="flat" data-testid="sign-in-button">
+        Sign In
+      </button>
+    </Link>
+  );
+
+  return (
+    <header className="NavBar">
+      <div className="header__left">
+        BSG-flix
+      </div>
+      <div className="header__right">
+        {user ? renderSignOutButtons() : renderSignInButtons()}
+      </div>
+    </header>
+  );
+};
+
+export default NavBar;

@@ -4,7 +4,8 @@ import {render, cleanup} from '@testing-library/react';
 import Main from './Main';
 
 jest.mock('../../components', () => ({
-  MediaListWidget: () => <></>
+  MediaListWidget: () => <></>,
+  NavBar: () => <></>
 }));
 
 describe('Main', () => {

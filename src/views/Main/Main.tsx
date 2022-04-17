@@ -1,12 +1,13 @@
 import React from 'react';
 
-import {MediaListWidget} from '../../components';
+import {MediaListWidget, NavBar} from '../../components';
 
 import './Main.css';
 
 const Main = () => {
   return (
     <div className="Main">
+      <NavBar />
       <MediaListWidget listId={2} />
       <MediaListWidget listId={5} />
     </div>
