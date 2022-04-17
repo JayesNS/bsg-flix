@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import {useAuth} from '../../context';
+import {Logo} from '../Logo';
 
 import './NavBar.css';
 
@@ -32,7 +33,7 @@ const NavBar = () => {
   return (
     <header className="NavBar">
       <div className="header__left">
-        BSG-flix
+        <Logo />
       </div>
       <div className="header__right">
         {user ? renderSignOutButtons() : renderSignInButtons()}

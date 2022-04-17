@@ -1,3 +1,4 @@
+export * from './Logo';
 export * from './MediaCard';
 export * from './MediaList';
 export * from './MediaListWidget';

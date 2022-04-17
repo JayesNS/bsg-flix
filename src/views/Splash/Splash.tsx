@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
 import {Navigate} from 'react-router-dom';
+
+import {Logo} from '../../components';
 import {useAuth} from '../../context';
 
 import './Splash.css';
@@ -13,7 +15,9 @@ const Splash = () => {
 
   return !token
     ? (
-      <div className="Splash">Splash</div>
+      <div className="Splash">
+        <Logo style={{width: '100px', height: '100px'}} />
+      </div>
     )
     : <Navigate to="/home" />;
 };

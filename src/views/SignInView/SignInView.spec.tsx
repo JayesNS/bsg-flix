@@ -10,6 +10,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('../../components', () => ({
+  ...jest.requireActual('../../components'),
   SignInBox: () => <div>signInBox</div>
 }));
 
