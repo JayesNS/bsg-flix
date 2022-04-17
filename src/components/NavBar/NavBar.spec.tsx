@@ -30,7 +30,7 @@ describe('NavBar', () => {
   it('should display sign in button when not logged in', () => {
     render(<NavBar />);
 
-    expect(screen.queryByTestId('sign-in-button')).not.toBeNull();
+    expect(screen.getByTestId('sign-in-button')).not.toBeNull();
   });
 
   it('should display sign out button and user full name', () => {
@@ -42,7 +42,7 @@ describe('NavBar', () => {
 
     render(<NavBar />);
 
-    expect(screen.queryByTestId('sign-out-button')).not.toBeNull();
-    expect(screen.queryByText('Test')).not.toBeNull();
+    expect(screen.getByTestId('sign-out-button')).not.toBeNull();
+    expect(screen.getByText('Test')).not.toBeNull();
   });
 });

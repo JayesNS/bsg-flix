@@ -14,7 +14,11 @@ const SignInView = () => {
     return <Navigate to="/home" />;
   }
 
-  return <SignInBox onSignIn={() => navigate('/home')} />;
+  return (
+    <div className="SignInView">
+      <SignInBox onSignIn={() => navigate('/home')} />
+    </div>
+  );
 };
 
 export default SignInView;

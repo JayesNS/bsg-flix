@@ -1,6 +1,7 @@
 import React from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {useAuth} from '../../context';
+import Input from '../Input/Input';
 
 import './SignInBox.css';
 
@@ -31,38 +32,37 @@ const SignInBox = ({onSignIn}: SignInBoxProps) => {
 
   return (
     <form
-      className="SignInBox"
+      className="SignInBox card"
     >
       <Controller
         name="email"
         rules={{required: 'Email is required'}}
         control={control}
-        render={({field, fieldState: {invalid}}) => (
-          <input
+        render={({field}) => (
+          <Input
             type="text"
-            placeholder="E-mail"
-            style={{borderColor: invalid ? 'red' : 'grey'}}
+            label="E-mail"
+            error={errors?.email?.message}
             {...field}
           />
         )}
       />
-      {errors.email && <>{errors.email.message}</>}
       <Controller
         name="password"
         rules={{required: 'Password is required'}}
         control={control}
-        render={({field, fieldState: {invalid}}) => (
-          <input
+        render={({field}) => (
+          <Input
             type="password"
-            placeholder="Password"
-            style={{borderColor: invalid ? 'red' : 'grey'}}
+            label="Password"
+            error={errors?.password?.message}
             {...field}
           />
         )}
       />
-      {errors.password && <>{errors.password.message}</>}
       <div className="SignInBox__buttons">
         <button
+          className="flat"
           type="submit"
           onClick={handleSubmit(handleSignIn)}
         >
