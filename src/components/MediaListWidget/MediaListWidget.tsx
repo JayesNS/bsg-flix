@@ -11,7 +11,7 @@ interface MediaListWidgetProps {
 
 const MediaListWidget = ({listId}: MediaListWidgetProps) => {
   const {token} = useAuth();
-  const [mediaList, setMediaList] = useState<Media[]>();
+  const [mediaList, setMediaList] = useState<Media[]>([]);
 
   useEffect(() => {
     if (!token) return;

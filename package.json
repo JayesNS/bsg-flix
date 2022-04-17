@@ -50,6 +50,9 @@
     ]
   },
   "jest": {
-    "collectCoverageFrom": ["./src/**/*.ts?(x)"]
+    "collectCoverageFrom": ["./src/**/*.ts?(x)"],
+    "moduleNameMapper": {
+      "swiper": "<rootDir>/mockSwiper.tsx"
+    }
   }
 }

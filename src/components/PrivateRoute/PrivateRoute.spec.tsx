@@ -21,7 +21,7 @@ describe('PrivateRoute', () => {
   afterEach(cleanup);
 
   beforeEach(() => {
-    useAuth.mockReturnValue({});
+    (useAuth as jest.Mock).mockReturnValue({});
   });
 
   it('should render component', () => {
@@ -37,7 +37,7 @@ describe('PrivateRoute', () => {
   });
 
   it('should render route', async () => {
-    useAuth.mockReturnValue({token: 'token'});
+    (useAuth as jest.Mock).mockReturnValue({token: 'token'});
 
     render(<PrivateRoute component={MockRoute} />);
 

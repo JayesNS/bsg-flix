@@ -17,7 +17,7 @@ const MediaCard = ({mediaId, title, imageUrl}: MediaCardProps) => {
   };
 
   return (
-    <div className="MediaCard" onClick={openPlayer}>
+    <div className="MediaCard" onClick={openPlayer} data-testid="media-card" >
       <h6>{title}</h6>
       <img src={imageUrl} alt={title} data-testid="media-card-image" />
     </div>

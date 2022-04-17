@@ -10,7 +10,7 @@ import {MediaCard} from '../MediaCard';
 import './MediaList.css';
 
 interface MediaListProps {
-  mediaList?: Media[];
+  mediaList: Media[];
 }
 
 const MediaList = ({mediaList}: MediaListProps) => {
