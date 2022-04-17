@@ -1,29 +1,11 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import React, {ComponentType, useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import React, {ComponentType, useCallback, useEffect, useMemo, useState} from 'react';
 import {v4 as uuid} from 'uuid';
 
-import {AuthService} from '../services';
-import {SignInResponse} from '../types';
+import {AuthService} from '../../services';
+import {AuthContext} from './AuthContext';
+import {AuthUser} from './types';
 
-interface AuthUser {
-  fullName: string;
-}
-
-interface AuthContextApi {
-  token?: string;
-  user?: AuthUser;
-  signInAnonymous: () => void;
-  signIn: (username: string, password: string) => Promise<SignInResponse | undefined>;
-  signOut: () => void
-}
-
-const AuthContext = React.createContext<AuthContextApi>({
-  signInAnonymous: () => {},
-  signIn: (email, password) => Promise.reject(),
-  signOut: () => {}
-});
-
-function withAuthProvider<T>(Component: ComponentType<T>) {
+export function withAuthProvider<T>(Component: ComponentType<T>) {
   return function AuthProvider(props: T) {
     const [token, setToken] = useState<string>();
     const [user, setUser] = useState<AuthUser>();
@@ -95,14 +77,3 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
     );
   };
 }
-
-const useAuth = (): AuthContextApi => {
-  const authContext = useContext(AuthContext);
-
-  return authContext;
-};
-
-export {
-  useAuth,
-  withAuthProvider
-};
