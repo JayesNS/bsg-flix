@@ -1,14 +1,18 @@
 export interface User {
-  Id: string;
+  Id: number;
   UserName: string;
   FullName: string;
+  Email?: string;
+  Initials?: string;
   ClientRoles: string[];
+  Products?: any[];
 }
 
 export interface AuthorizationToken {
-  AuthResult: string;
+  AuthResult?: string;
   Token: string;
   TokenExpires: string;
+  RefreshToken?: string;
 }
 
 export interface SignInResponse {

@@ -4,18 +4,26 @@ import {v4 as uuid} from 'uuid';
 
 import {AuthService} from '../services';
 
+interface AuthUser {
+  fullName: string;
+}
+
 interface AuthContextApi {
   token?: string;
+  user?: AuthUser;
   signInAnonymous: () => void;
+  signIn: (username: string, password: string) => void;
 }
 
 const AuthContext = React.createContext<AuthContextApi>({
-  signInAnonymous: () => {}
+  signInAnonymous: () => {},
+  signIn: (email, password) => {}
 });
 
 function withAuthProvider<T>(Component: ComponentType<T>) {
   return function AuthProvider(props: T) {
     const [token, setToken] = useState<string>();
+    const [user, setUser] = useState<AuthUser>();
     
     const cookies = useMemo<Record<string, string>>(() => {
       const decoded = decodeURIComponent(document.cookie);
@@ -38,14 +46,26 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
         }).catch(console.error);
     }, [setToken]);
 
+    const signIn = useCallback((email: string, password: string) => {
+      AuthService.signIn(email, password, uuid())
+        .then((response) => {
+          const {Token: token, TokenExpires: tokenExpires} = response.AuthorizationToken;
+          const {FullName: fullName} = response.User;
+          setCookie('token', token, tokenExpires);
+          setToken(token);
+          setUser({fullName});
+        }).catch(console.error);
+    }, [setToken]);
+
     useEffect(() => {
       const cookie = cookies['token'];
       if (cookie) {
         setToken(cookies['token']);
         return;
       }
-      signInAnonymous();
-    }, [cookies, signInAnonymous]);
+      // signInAnonymous();
+      signIn('test@bsgroup.eu', 'Test12!@');
+    }, [cookies, signInAnonymous, signIn]);
 
     function setCookie(name: string, value: string, tokenExpires: string): void {
       const expires = 'expires=' + new Date(tokenExpires).toUTCString();
@@ -55,7 +75,9 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
     return (
       <AuthContext.Provider value={{
         token,
-        signInAnonymous
+        signInAnonymous,
+        signIn,
+        user
       }}>
         <Component {...props} />
       </AuthContext.Provider>
