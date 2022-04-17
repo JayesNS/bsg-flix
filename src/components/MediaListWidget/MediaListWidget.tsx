@@ -21,7 +21,7 @@ const MediaListWidget = ({listId}: MediaListWidgetProps) => {
   }, [listId, token]);
 
   return (
-    <MediaList mediaList={mediaList} />
+    <MediaList mediaList={mediaList} listId={listId} />
   );
 };
 

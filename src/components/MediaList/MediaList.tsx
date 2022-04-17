@@ -10,10 +10,11 @@ import {MediaCard} from '../MediaCard';
 import './MediaList.css';
 
 interface MediaListProps {
+  listId?: number; 
   mediaList: Media[];
 }
 
-const MediaList = ({mediaList}: MediaListProps) => {
+const MediaList = ({listId = 0, mediaList}: MediaListProps) => {
   const renderMediaCard = useCallback((media: Media) => {
     const {
       Id: id,
@@ -41,10 +42,9 @@ const MediaList = ({mediaList}: MediaListProps) => {
         modules={[Autoplay, Navigation]}
         slidesPerView={1}
         navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: `.swiper-${listId}-button-next`,
+          prevEl: `.swiper-${listId}-button-prev`,
         }}
-        spaceBetween={10}
         loop
         direction="horizontal"
         autoplay
@@ -66,8 +66,8 @@ const MediaList = ({mediaList}: MediaListProps) => {
         {renderMediaList()}
       </Swiper>
 
-      <div className="swiper-button-prev"></div>
-      <div className="swiper-button-next"></div>
+      <div className={`swiper-button-prev swiper-${listId}-button-prev`}></div>
+      <div className={`swiper-button-next swiper-${listId}-button-next`}></div>
     </div>
   );
 };
