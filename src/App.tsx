@@ -3,25 +3,24 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 import {PrivateRoute} from './components';
 import {withAuthProvider} from './context';
-import {Main, Player, Splash} from './views';
+import {Main, Player, SignInView, Splash} from './views';
 
 const App = () => {
   return (
-    <React.StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Splash />} />
-          <Route
-            path="home"
-            element={<PrivateRoute component={Main} />}
-          />
-          <Route
-            path="player/:mediaId"
-            element={<PrivateRoute component={Player} />}
-          />
-        </Routes>
-      </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Splash />} />
+        <Route path="signIn" element={<SignInView />} />
+        <Route
+          path="home"
+          element={<PrivateRoute component={Main} />}
+        />
+        <Route
+          path="player/:mediaId"
+          element={<PrivateRoute component={Player} />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

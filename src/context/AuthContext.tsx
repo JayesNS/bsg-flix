@@ -43,6 +43,7 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
           const {Token, TokenExpires} = response.AuthorizationToken;
           setCookie('token', Token, TokenExpires);
           setToken(Token);
+          setUser(undefined);
         }).catch(console.error);
     }, [setToken]);
 
@@ -63,8 +64,7 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
         setToken(cookies['token']);
         return;
       }
-      // signInAnonymous();
-      signIn('test@bsgroup.eu', 'Test12!@');
+      signInAnonymous();
     }, [cookies, signInAnonymous, signIn]);
 
     function setCookie(name: string, value: string, tokenExpires: string): void {
