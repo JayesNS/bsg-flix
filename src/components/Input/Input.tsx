@@ -11,9 +11,10 @@ interface InputProps {
   label?: string;
   onChange: (value: string) => void;
   testID?: string;
+  forwardedRef?: React.Ref<HTMLInputElement>;
 }
 
-const Input = ({id, error, onChange, value, label, testID, type}: InputProps) => {
+const Input = ({id, error, forwardedRef, onChange, value, label, testID, type}: InputProps) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     onChange(event.target.value);
   };
@@ -27,6 +28,7 @@ const Input = ({id, error, onChange, value, label, testID, type}: InputProps) =>
         {label}
       </label>
       <input
+        ref={forwardedRef}
         id={id}
         type={type}
         value={value}
@@ -41,4 +43,6 @@ const Input = ({id, error, onChange, value, label, testID, type}: InputProps) =>
   );
 };
 
-export default Input;
+export default React.forwardRef((props: InputProps, ref: React.Ref<HTMLInputElement>) => (
+  <Input {...props} forwardedRef={ref} />
+));
