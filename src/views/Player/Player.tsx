@@ -5,18 +5,27 @@ import ReactPlayer from 'react-player';
 import './Player.css';
 import {MediaService} from '../../services';
 import {useAuth} from '../../context';
+import {ResponseError} from '../../types';
 
 const Player = () => {
   const {mediaId} = useParams<{mediaId: string}>();
-  const {token} = useAuth();
+  const {token, user} = useAuth();
   const [contentUrl, setContentUrl] = useState<string>();
 
   useEffect(() => {
-    if (!mediaId || !token) return;
-    MediaService.fetchMediaPlayInfo(parseInt(mediaId, 10), {token})
-      .then(({ContentUrl: contentUrl}) => {
-        setContentUrl(contentUrl);
-      });
+    const fetchData = async () => {
+      try {
+        if (!mediaId || !token) return;
+        await MediaService.fetchMediaPlayInfo(parseInt(mediaId, 10), !user, {token})
+          .then(({ContentUrl: contentUrl}) => {
+            setContentUrl(contentUrl);
+          });
+      } catch(e) {
+        const {Message: message} = e as ResponseError;
+        alert(message);
+      }
+    };
+    fetchData();
   }, []);
 
   const renderNoPlayback = () => (
@@ -38,6 +47,7 @@ const Player = () => {
             controls
             width="100%"
             height="100%"
+            pip={false}
           />
         )
         : renderNoPlayback()

@@ -1,4 +1,4 @@
-import {MediaListResponse, MediaPlayInfo, ResponseError} from '../types';
+import {MediaListResponse, MediaPlayInfo, ResponseError, StreamType} from '../types';
 
 export const fetchMediaList = async (listId: number, {token}: {token: string}): Promise<MediaListResponse> => {
   const response = await fetch('https://thebetter.bsgroup.eu/Media/GetMediaList', {
@@ -23,7 +23,7 @@ export const fetchMediaList = async (listId: number, {token}: {token: string}): 
   return Promise.resolve(data);
 };
 
-export const fetchMediaPlayInfo = async (mediaId: number, {token}: {token: string}): Promise<MediaPlayInfo> => {
+export const fetchMediaPlayInfo = async (mediaId: number, isTrial: boolean, {token}: {token: string}): Promise<MediaPlayInfo> => {
   const response = await fetch('https://thebetter.bsgroup.eu/Media/GetMediaPlayInfo', {
     method: 'POST',
     headers: {
@@ -32,7 +32,7 @@ export const fetchMediaPlayInfo = async (mediaId: number, {token}: {token: strin
     },
     body: JSON.stringify({
       MediaId: mediaId,
-      StreamType: 'TRIAL'
+      StreamType: isTrial ? StreamType.TRIAL : StreamType.MAIN
     })
   });
   const data = await response.json();

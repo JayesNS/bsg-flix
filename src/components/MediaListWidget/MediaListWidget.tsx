@@ -18,7 +18,7 @@ const MediaListWidget = ({listId}: MediaListWidgetProps) => {
     MediaService.fetchMediaList(listId, {token}).then((response) => {
       setMediaList(response.Entities);
     });
-  }, [listId, token]);
+  }, []);
 
   return (
     <MediaList mediaList={mediaList} listId={listId} />

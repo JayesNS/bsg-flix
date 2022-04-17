@@ -86,3 +86,8 @@ export interface MediaPlayInfo {
   Provider: 'Internal';
   ContentUrl: string;
 }
+
+export enum StreamType {
+  TRIAL = 'TRIAL',
+  MAIN = 'MAIN'
+}
