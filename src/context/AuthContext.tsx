@@ -3,6 +3,7 @@ import React, {ComponentType, useCallback, useContext, useEffect, useMemo, useSt
 import {v4 as uuid} from 'uuid';
 
 import {AuthService} from '../services';
+import {SignInResponse} from '../types';
 
 interface AuthUser {
   fullName: string;
@@ -12,12 +13,14 @@ interface AuthContextApi {
   token?: string;
   user?: AuthUser;
   signInAnonymous: () => void;
-  signIn: (username: string, password: string) => void;
+  signIn: (username: string, password: string) => Promise<SignInResponse | undefined>;
+  signOut: () => void
 }
 
 const AuthContext = React.createContext<AuthContextApi>({
   signInAnonymous: () => {},
-  signIn: (email, password) => {}
+  signIn: (email, password) => Promise.reject(),
+  signOut: () => {}
 });
 
 function withAuthProvider<T>(Component: ComponentType<T>) {
@@ -45,18 +48,26 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
           setToken(Token);
           setUser(undefined);
         }).catch(console.error);
-    }, [setToken]);
+    }, [setToken, setUser]);
 
-    const signIn = useCallback((email: string, password: string) => {
-      AuthService.signIn(email, password, uuid())
-        .then((response) => {
-          const {Token: token, TokenExpires: tokenExpires} = response.AuthorizationToken;
-          const {FullName: fullName} = response.User;
-          setCookie('token', token, tokenExpires);
-          setToken(token);
-          setUser({fullName});
-        }).catch(console.error);
-    }, [setToken]);
+    const signIn = useCallback(async (email: string, password: string) => {
+      try {
+        const response = await AuthService.signIn(email, password, uuid());
+        const {Token: token, TokenExpires: tokenExpires} = response.AuthorizationToken;
+        const {FullName: fullName} = response.User;
+        setCookie('token', token, tokenExpires);
+        setToken(token);
+        setUser({fullName});
+        return response;
+      } catch(e) {
+        console.error(e);
+      }
+    }, [setToken, setUser]);
+
+    const signOut = useCallback(() => {
+      setToken(undefined);
+      setUser(undefined);
+    }, [setToken, setUser]);
 
     useEffect(() => {
       const cookie = cookies['token'];
@@ -64,7 +75,6 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
         setToken(cookies['token']);
         return;
       }
-      signInAnonymous();
     }, [cookies, signInAnonymous, signIn]);
 
     function setCookie(name: string, value: string, tokenExpires: string): void {
@@ -77,6 +87,7 @@ function withAuthProvider<T>(Component: ComponentType<T>) {
         token,
         signInAnonymous,
         signIn,
+        signOut,
         user
       }}>
         <Component {...props} />

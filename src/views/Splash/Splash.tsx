@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Navigate} from 'react-router-dom';
 import {useAuth} from '../../context';
 
 import './Splash.css';
 
 const Splash = () => {
-  const {token} = useAuth();
+  const {token, signInAnonymous} = useAuth();
+
+  useEffect(() => {
+    signInAnonymous();
+  }, [signInAnonymous]);
 
   return !token
     ? (

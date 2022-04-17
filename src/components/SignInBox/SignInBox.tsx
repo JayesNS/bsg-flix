@@ -23,9 +23,9 @@ const SignInBox = ({onSignIn}: SignInBoxProps) => {
 
   const {signIn} = useAuth();
 
-  const handleSignIn = (form: SignInForm) => {
+  const handleSignIn = async (form: SignInForm) => {
     const {email, password} = form;
-    signIn(email, password);
+    await signIn(email, password);
     onSignIn && onSignIn(form);
   };
 

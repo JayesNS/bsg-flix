@@ -6,12 +6,16 @@ import {useAuth} from '../../context';
 import './NavBar.css';
 
 const NavBar = () => {
-  const {user} = useAuth();
+  const {user, signOut} = useAuth();
+
+  const handleSignOut = () => {
+    signOut();
+  };
 
   const renderSignOutButtons = () => (
     <>
       {user?.fullName ? <span className="header__right__user">{user?.fullName}</span> : null}
-      <button className="text" data-testid="sign-out-button">
+      <button className="text" onClick={handleSignOut} data-testid="sign-out-button">
         Sign Out
       </button>
     </>
